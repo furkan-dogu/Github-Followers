@@ -14,7 +14,6 @@ const getFollowers = async (username) => {
     );
     if (res.ok) {
       const data = await res.json();
-      // console.log(data);
       followers = data;
       searchInput.style.display = "flex"
       data.forEach((item) => createElem(item));
@@ -22,14 +21,12 @@ const getFollowers = async (username) => {
       searchInput.style.display = "none"
       cardsDiv.innerHTML = `<h1 class="mx-auto text-center">Kullanıcı Bulunamadı</h1>`;
     }
-    // const data = await res.json()
   } catch (error) {}
 };
 
 const createElem = (user) => {
-  // console.log(user);
+
   const { login, html_url, avatar_url } = user;
-  // console.log(login);
 
   const newElem = `
     <div class="col">
@@ -45,13 +42,9 @@ const createElem = (user) => {
   cardsDiv.innerHTML += newElem;
 };
 
-// getFollowers("asasdsadsadasdas")
-// getFollowers("furkan-dogu")
-
 searchBtn.addEventListener("click", () => {
   const value = document.getElementById("searchText").value.trim();
-  // console.log(value);
-  // value.trim() && getFollowers(value)
+
   if (value) {
     getFollowers(value);
   } else {
@@ -60,8 +53,6 @@ searchBtn.addEventListener("click", () => {
 });
 
 searchInput.addEventListener("input", (e) => {
-  console.log(e.target.value);
-  console.log(followers);
   cardsDiv.innerHTML = ""
   followers
     .filter((item) =>
@@ -72,4 +63,10 @@ searchInput.addEventListener("input", (e) => {
 
 window.addEventListener("load", () => {
     searchInput.style.display = "none"
+})
+
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Enter") {
+      searchBtn.click()
+  }
 })
